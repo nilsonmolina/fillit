@@ -6,18 +6,17 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:35:59 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/18 19:59:38 by nmolina          ###   ########.fr       */
+/*   Updated: 2017/12/19 21:50:15 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
 #include <stdio.h>
 
 int		main(int argc, char **argv)
 {
 	int pos[26][4];
-	
+
 	if (argc != 2)
 	{
 		ft_putstr("usage: ./fillit input_file");

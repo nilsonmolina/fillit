@@ -6,16 +6,19 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:40:28 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/19 13:58:04 by nmolina          ###   ########.fr       */
+/*   Updated: 2017/12/19 21:49:52 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
 #include <stdio.h>
+
 void	print_chunk(char *chunk, int *piece)
 {
-	int i = 0;
+	int i;
+
+	i = 0;
 	while (piece[i])
 		printf("%d ", piece[i++]);
 	printf("%s", "\n");
@@ -23,7 +26,7 @@ void	print_chunk(char *chunk, int *piece)
 	while (chunk[i])
 	{
 		printf("%c", chunk[i++]);
-	}	
+	}
 }
 
 int		scan_file(char *file, int pos[26][4])
@@ -81,15 +84,11 @@ int		scan_chunk(char *chunk, int *piece)
 
 int		verify_tetrimino(int *piece)
 {
-	if (is_square(piece))
-		return (1);
-	if (is_l(piece))
-		return (1);
-	if (is_z(piece))
-		return (1);
-	if (is_line(piece))
-		return (1);
-	if (is_t(piece))
+	if (is_square(piece) ||
+		is_l(piece) ||
+		is_z(piece) ||
+		is_line(piece) ||
+		is_t(piece))
 		return (1);
 	return (0);
 }
