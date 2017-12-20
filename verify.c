@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:40:28 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/19 21:49:52 by nmolina          ###   ########.fr       */
+/*   Updated: 2017/12/20 13:39:30 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 #include <stdio.h>
 
-void	print_chunk(char *chunk, int *piece)
+void	print_chunk(char *chunk, int *tet)
 {
 	int i;
 
 	i = 0;
-	while (piece[i])
-		printf("%d ", piece[i++]);
+	while (i < 4)
+		printf("%d ", tet[i++]);
 	printf("%s", "\n");
 	i = 0;
 	while (chunk[i])
@@ -42,6 +42,8 @@ int		scan_file(char *file, int pos[26][4])
 		return (0);
 	while ((ret = read(fd, buffer, BUF_SIZE)))
 	{
+		if (i >= 26)
+			return (0);
 		if (!scan_chunk(buffer, pos[i]))
 			return (0);
 		print_chunk(buffer, pos[i]);
@@ -53,7 +55,7 @@ int		scan_file(char *file, int pos[26][4])
 	return (1);
 }
 
-int		scan_chunk(char *chunk, int *piece)
+int		scan_chunk(char *chunk, int *tet)
 {
 	COUNTER_VARS;
 	while (chunk[i])
@@ -61,7 +63,7 @@ int		scan_chunk(char *chunk, int *piece)
 		if (!(IS_VALID_CHAR(chunk[i])))
 			return (0);
 		if (chunk[i] == '#')
-			piece[tiles++] = i + 1 - y;
+			tet[tiles++] = i + 1 - y;
 		if (chunk[i] == '#' && tiles > 4)
 			return (0);
 		if (chunk[i] == '\n')
@@ -82,13 +84,24 @@ int		scan_chunk(char *chunk, int *piece)
 	return (1);
 }
 
-int		verify_tetrimino(int *piece)
+int		verify_tetrimino(int *tet)
 {
-	if (is_square(piece) ||
-		is_l(piece) ||
-		is_z(piece) ||
-		is_line(piece) ||
-		is_t(piece))
+	if (!check_edge(tet))
+		return (0);
+	if (is_square(tet) ||
+		is_l(tet) ||
+		is_z(tet) ||
+		is_line(tet) ||
+		is_t(tet))
 		return (1);
 	return (0);
+}
+
+int		check_edge(int *tet)
+{
+	if ((tet[0] + 1 == tet[1] && tet[0] % 4 == 0) ||
+		(tet[1] + 1 == tet[2] && tet[1] % 4 == 0) ||
+		(tet[2] + 1 == tet[3] && tet[2] % 4 == 0))
+		return (0);
+	return (1);
 }
