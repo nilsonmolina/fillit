@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 14:30:02 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/20 13:42:14 by nmolina          ###   ########.fr       */
+/*   Updated: 2017/12/20 17:54:38 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,15 @@
 # define BUF_SIZE 21
 # define COUNTER_VARS int i = 0; int x = 0; int y = 0; int tiles = 0;
 
+typedef struct	s_tet
+{
+	int			positions[26][4];
+	int			count;
+}				t_tet;
+
 void			ft_puterror(char *msg);
 
-int				scan_file(char *file, int pos[26][4]);
+int				scan_file(char *file, t_tet tetriminos);
 int				scan_chunk(char *chunk, int *tet);
 int				verify_tetrimino(int *tet);
 int				check_edge(int *tet);

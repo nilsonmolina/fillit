@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:40:28 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/20 13:39:30 by nmolina          ###   ########.fr       */
+/*   Updated: 2017/12/20 17:53:48 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_chunk(char *chunk, int *tet)
 	}
 }
 
-int		scan_file(char *file, int pos[26][4])
+int		scan_file(char *file, t_tet tetriminos)
 {
 	int		fd;
 	int		ret;
@@ -44,14 +44,15 @@ int		scan_file(char *file, int pos[26][4])
 	{
 		if (i >= 26)
 			return (0);
-		if (!scan_chunk(buffer, pos[i]))
+		if (!scan_chunk(buffer, tetriminos.positions[i]))
 			return (0);
-		print_chunk(buffer, pos[i]);
-		if (!verify_tetrimino(pos[i]))
+		print_chunk(buffer, tetriminos.positions[i]);
+		if (!verify_tetrimino(tetriminos.positions[i]))
 			return (0);
 		i++;
 	}
 	close(fd);
+	tetriminos.count = i;
 	return (1);
 }
 
