@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:40:28 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/20 17:53:48 by nmolina          ###   ########.fr       */
+/*   Updated: 2017/12/21 23:24:21 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_chunk(char *chunk, int *tet)
 	}
 }
 
-int		scan_file(char *file, t_tet tetriminos)
+int		scan_file(char *file, t_tet tets)
 {
 	int		fd;
 	int		ret;
@@ -42,17 +42,17 @@ int		scan_file(char *file, t_tet tetriminos)
 		return (0);
 	while ((ret = read(fd, buffer, BUF_SIZE)))
 	{
-		if (i >= 26)
+		if (i > 25)
 			return (0);
-		if (!scan_chunk(buffer, tetriminos.positions[i]))
+		if (!scan_chunk(buffer, tets.positions[i]))
 			return (0);
-		print_chunk(buffer, tetriminos.positions[i]);
-		if (!verify_tetrimino(tetriminos.positions[i]))
+		print_chunk(buffer, tets.positions[i]);
+		if (!verify_tetrimino(tets.positions[i]))
 			return (0);
 		i++;
 	}
 	close(fd);
-	tetriminos.count = i;
+	tets.count = i;
 	return (1);
 }
 
@@ -78,7 +78,7 @@ int		scan_chunk(char *chunk, int *tet)
 			x++;
 		i++;
 	}
-	if (tiles < 4)
+	if (tiles != 4)
 		return (0);
 	if (i != BUF_SIZE)
 		return (0);
@@ -87,15 +87,12 @@ int		scan_chunk(char *chunk, int *tet)
 
 int		verify_tetrimino(int *tet)
 {
-	if (!check_edge(tet))
-		return (0);
-	if (is_square(tet) ||
+	return (check_edge(tet) &&
+		(is_square(tet) ||
 		is_l(tet) ||
 		is_z(tet) ||
 		is_line(tet) ||
-		is_t(tet))
-		return (1);
-	return (0);
+		is_t(tet)));
 }
 
 int		check_edge(int *tet)

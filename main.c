@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:35:59 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/20 17:53:50 by nmolina          ###   ########.fr       */
+/*   Updated: 2017/12/21 23:24:19 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int		main(int argc, char **argv)
 {
-	t_tet tetriminos;
+	t_tet tets;
 
-	tetriminos.count = 0;
+	tets.count = 0;
 	if (argc != 2)
 		ft_puterror("usage: ./fillit input_file");
-	if (!(scan_file(argv[1], tetriminos)))
+	if (!(scan_file(argv[1], tets)))
 		ft_puterror("error");
+	//fillit(tets);
 	return (0);
 }
 

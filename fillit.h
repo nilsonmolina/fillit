@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 14:30:02 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/20 17:54:38 by nmolina          ###   ########.fr       */
+/*   Updated: 2017/12/21 23:24:27 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct	s_tet
 
 void			ft_puterror(char *msg);
 
-int				scan_file(char *file, t_tet tetriminos);
+int				scan_file(char *file, t_tet tets);
 int				scan_chunk(char *chunk, int *tet);
 int				verify_tetrimino(int *tet);
 int				check_edge(int *tet);
@@ -42,5 +42,9 @@ int				is_line(int *tet);
 int				is_t(int *tet);
 int				is_z(int *tet);
 int				is_l(int *tet);
+
+//void			fillit(t_tet tets);
+//char			*generate_square(char *square, int size);
+//void			print_square(char *square, int size);		
 
 #endif
