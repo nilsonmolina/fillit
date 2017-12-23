@@ -15,7 +15,6 @@
 
 # include <fcntl.h>
 # include <sys/types.h>
-# include <sys/uio.h>
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -25,17 +24,24 @@
 
 typedef struct	s_tet
 {
-	int			positions[26][4];
-	int			count;
+	int		hashes[4];
+	int		deltas[4];
 }				t_tet;
+
+typedef struct	s_map
+{
+	int		count;
+	int		size;
+	t_tet	tets[26];
+}				t_map;
 
 void			ft_puterror(char *msg);
 
-int				scan_file(char *file, t_tet tets);
-int				scan_chunk(char *chunk, int *tet);
-int				verify_tetrimino(int *tet);
+int				scan_file(char *file, t_map *map);
+int				scan_chunk(char *chunk, t_tet *tet);
+void			diff_chunk(t_tet *tet);
+int				verify_tetrimino(t_tet *tet);
 int				check_edge(int *tet);
-void			print_chunk(char *chunk, int *tet);
 
 int				is_square(int *tet);
 int				is_line(int *tet);
@@ -45,6 +51,6 @@ int				is_l(int *tet);
 
 //void			fillit(t_tet tets);
 //char			*generate_square(char *square, int size);
-//void			print_square(char *square, int size);		
+//void			print_square(char *square, int size);
 
 #endif

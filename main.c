@@ -14,12 +14,13 @@
 
 int		main(int argc, char **argv)
 {
-	t_tet tets;
+	t_map	map;
 
-	tets.count = 0;
+	map.size = 2;
+	map.count = 0;
 	if (argc != 2)
 		ft_puterror("usage: ./fillit input_file");
-	if (!(scan_file(argv[1], tets)))
+	if (!(scan_file(argv[1], &map)))
 		ft_puterror("error");
 	//fillit(tets);
 	return (0);
