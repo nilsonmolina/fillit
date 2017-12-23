@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 14:30:02 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/21 23:24:27 by nmolina          ###   ########.fr       */
+/*   Updated: 2017/12/22 22:04:55 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ int				scan_file(char *file, t_map *map);
 int				scan_chunk(char *chunk, t_tet *tet);
 void			diff_chunk(t_tet *tet);
 int				verify_tetrimino(t_tet *tet);
-int				check_edge(int *tet);
+int				check_edge(int *hs);
 
-int				is_square(int *tet);
-int				is_line(int *tet);
-int				is_t(int *tet);
-int				is_z(int *tet);
-int				is_l(int *tet);
+int				is_square(int *hs);
+int				is_line(int *hs);
+int				is_t(int *hs, int *ds);
+int				is_z(int *hs, int *ds);
+int				is_l(int *hs, int *ds);
 
 //void			fillit(t_tet tets);
 //char			*generate_square(char *square, int size);
