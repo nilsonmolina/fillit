@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:40:28 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/21 23:24:21 by nmolina          ###   ########.fr       */
+/*   Updated: 2017/12/22 22:06:34 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,17 @@ int		verify_tetrimino(t_tet *tet)
 {
 	return (check_edge(tet->hashes) &&
 		(is_square(tet->hashes) ||
-		is_l(tet->hashes) ||
-		is_z(tet->hashes) ||
 		is_line(tet->hashes) ||
-		is_t(tet->hashes)));
+		is_l(tet->hashes, tet->deltas) ||
+		is_z(tet->hashes, tet->deltas) ||
+		is_t(tet->hashes, tet->deltas)));
 }
 
-int		check_edge(int *tet)
+int		check_edge(int *hs)
 {
-	if ((tet[0] + 1 == tet[1] && tet[0] % 4 == 0) ||
-		(tet[1] + 1 == tet[2] && tet[1] % 4 == 0) ||
-		(tet[2] + 1 == tet[3] && tet[2] % 4 == 0))
+	if ((hs[0] + 1 == hs[1] && hs[0] % 4 == 0) ||
+		(hs[1] + 1 == hs[2] && hs[1] % 4 == 0) ||
+		(hs[2] + 1 == hs[3] && hs[2] % 4 == 0))
 		return (0);
 	return (1);
 }
