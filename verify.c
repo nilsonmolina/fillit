@@ -35,8 +35,10 @@ int		scan_file(char *file, t_map *map)
 	int		ret;
 	char	buffer[BUF_SIZE];
 	int		i;
+	char	c;
 
 	i = 0;
+	c = 'A';
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (0);
@@ -48,6 +50,7 @@ int		scan_file(char *file, t_map *map)
 			return (0);
 		print_chunk(buffer, &map->tets[i]);
 		diff_chunk(&map->tets[i]);
+		map->tets[i].c = c++;
 		if (!verify_tetrimino(&map->tets[i]))
 			return (0);
 		i++;

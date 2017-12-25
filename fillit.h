@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+# define MAX 26
 # define IS_VALID_CHAR(x) (x == '.' || x == '#' || x == '\n')
 # define BUF_SIZE 21
 # define COUNTER_VARS int i = 0; int x = 0; int y = 0; int tiles = 0;
@@ -26,13 +27,17 @@ typedef struct	s_tet
 {
 	int		hashes[4];
 	int		deltas[4];
+	//int		i;
+	char	c;
 }				t_tet;
 
 typedef struct	s_map
 {
 	int		count;
 	int		size;
-	t_tet	tets[26];
+	//int		i;
+	char	z[MAX * MAX];
+	t_tet	tets[MAX];
 }				t_map;
 
 void			ft_puterror(char *msg);
@@ -49,8 +54,9 @@ int				is_t(int *hs, int *ds);
 int				is_z(int *hs, int *ds);
 int				is_l(int *hs, int *ds);
 
-//void			fillit(t_tet tets);
-//char			*generate_square(char *square, int size);
-//void			print_square(char *square, int size);
+int				fillit_try(t_map *map);
+int				fillit_go(t_map *map, int i);
+int				fillit_look(t_map *map, t_tet *tet);
+int				fillit_ok(t_map *map, t_tet *tet);
 
 #endif

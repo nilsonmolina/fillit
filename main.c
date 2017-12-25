@@ -12,17 +12,33 @@
 
 #include "fillit.h"
 
+int		fillit_try(t_map *map)
+{
+	int		i;
+
+	map->size = 2;
+	while (map->size < MAX)
+	{
+		i = 0;
+		map->z[map->size] = '\0';
+		while (i < map->size)
+			map->z[i++] = '.';
+		if (fillit_go(map, 0))
+			return (1);
+		map->size++;
+	}
+	return (0);
+}
+
 int		main(int argc, char **argv)
 {
 	t_map	map;
 
-	map.size = 2;
 	map.count = 0;
 	if (argc != 2)
 		ft_puterror("usage: ./fillit input_file");
-	if (!(scan_file(argv[1], &map)))
+	if (!(scan_file(argv[1], &map) && fillit_try(&map)))
 		ft_puterror("error");
-	//fillit(tets);
 	return (0);
 }
 

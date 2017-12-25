@@ -12,46 +12,66 @@
 
 #include "fillit.h"
 
-void	fillit(t_tet tets)
+int		fillit_tet(t_map *map, t_tet *tet, int ok)
 {
-	char	*square;
-	int		size;
-
-	size = 2;
-	square = (char *)malloc(sizeof(char *) * 2);
-	square = generate_square(square, size);
-	print_square(square, size);
-	tets.count = 0;
-}
-
-char	*generate_square(char *square, int size)
-{
-	char	*new;
-	int 	i;
+	int		i;
+	int		j;
 
 	i = 0;
-	size = size * size;
-	if (square)
-		free(square);
-	new = (char *)malloc(sizeof(char *) * (size + 1));
-	while (i < size)
-		new[i] = '.';
-	new[i] = '\0';
-	return (new);
-}
-
-void	print_square(char *square, int size)
-{
-	int i;
-
-	i = 0;
-	while (square[i])
+	while (++i < 4)
 	{
-		write(1, &square[i], 1);
-		if ((i + 1) % size == 0)
-			write(1, "\n", 1);
-		i++;
+		j = tet->deltas[i] - tet->deltas[i - 1];
+		map->z[j] = (ok ? tet->c : '.');
 	}
+	return (ok ? 1 : 0);
 }
 
-//int		is_viable_position(char *square, int *tet, int tet_count)
+int		fillit_look(t_map *map, t_tet *tet)
+{
+	int		i;
+	int		j;
+	int		k;
+
+	i = -1;
+	while (++i < map->size)
+	{
+		// check wall?
+	}
+	j = 0;
+	while (++j < 4)
+	{
+		k = tet->deltas[j] - tet->deltas[j - 1];
+	}
+	return (map != NULL && tet != NULL);
+	//return (0);
+}
+
+int		fillit_ok(t_map *map, t_tet *tet)
+{
+	return (map != NULL && tet != NULL);
+	//return (0);
+}
+
+int		fillit_go(t_map *map, int i)
+{
+	t_tet	*tet;
+	int ok;
+
+	tet = &map->tets[i];
+
+	if (fillit_look(map, tet))
+	{
+		ok = fillit_ok(map, tet);
+		if (fillit_tet(map, tet, ok))
+		{
+			/*
+			if (fillit_go(map, i + 1))
+				return (1);
+			else
+				fillit_tet(map, tet, !ok);
+			*/
+		}
+	}
+	return (1);
+	//return (0);
+}
