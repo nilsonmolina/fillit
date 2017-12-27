@@ -20,10 +20,17 @@ void	print_chunk(char *chunk, t_tet *tet)
 {
 	int i;
 
+	printf("%d : %c\n", tet->i, tet->c);
 	i = 0;
+	printf("hashes: ");
 	while (i < 4)
 		printf("%d ", tet->hashes[i++]);
-	printf("%s", "\n");
+	printf("\n");
+	i = 0;
+	printf("deltas: ");
+	while (i < 4)
+		printf("%d ", tet->deltas[i++]);
+	printf("\n");
 	i = 0;
 	while (chunk[i])
 		printf("%c", chunk[i++]);
@@ -48,11 +55,13 @@ int		scan_file(char *file, t_map *map)
 			return (0);
 		if (!scan_chunk(buffer, &map->tets[i]))
 			return (0);
-		print_chunk(buffer, &map->tets[i]);
 		diff_chunk(&map->tets[i]);
+		map->tets[i].i = i;
 		map->tets[i].c = c++;
+		//print_chunk(buffer, &map->tets[i]);
 		if (!verify_tetrimino(&map->tets[i]))
 			return (0);
+		print_chunk(buffer, &map->tets[i]);
 		i++;
 	}
 	close(fd);

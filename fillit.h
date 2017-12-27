@@ -27,7 +27,7 @@ typedef struct	s_tet
 {
 	int		hashes[4];
 	int		deltas[4];
-	//int		i;
+	int		i;
 	char	c;
 }				t_tet;
 
