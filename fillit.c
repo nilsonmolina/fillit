@@ -12,26 +12,32 @@
 
 #include "fillit.h"
 
-int		fillit_tet(t_map *map, t_tet *tet, int ok)
+void	fillit_tet(t_map *map, t_tet *tet, int j, int ok)
 {
 	int		i;
-	int		j;
-
-	i = 0;
-	while (++i < 4)
-	{
-		j = tet->deltas[i] - tet->deltas[i - 1];
-		map->z[j] = (ok ? tet->c : '.');
-	}
-	return (ok ? 1 : 0);
-}
-
-int		fillit_look(t_map *map, t_tet *tet)
-{
-	int		i;
-	int		j;
 	int		k;
 
+	i = -1;
+	k = 0;
+	while (++i < 4)
+	{
+		k += tet->deltas[i] + (i && tet->deltas[i] > 1 ? map->size - 4 : 0);
+		/*
+		k += (i && tet->deltas[i] > 1)
+			? (tet->deltas[i] + map->size - 4)
+			: tet->deltas[i];
+		*/
+		map->z[j + k] = (ok ? tet->c : '.');
+	}
+}
+
+int		fillit_look(t_map *map, t_tet *tet, int j)
+{
+	int		i;
+
+	j = 0;
+	i = -1;
+	/*
 	i = -1;
 	while (++i < map->size)
 	{
@@ -42,12 +48,7 @@ int		fillit_look(t_map *map, t_tet *tet)
 	{
 		k = tet->deltas[j] - tet->deltas[j - 1];
 	}
-	return (map != NULL && tet != NULL);
-	//return (0);
-}
-
-int		fillit_ok(t_map *map, t_tet *tet)
-{
+	*/
 	return (map != NULL && tet != NULL);
 	//return (0);
 }
@@ -55,22 +56,18 @@ int		fillit_ok(t_map *map, t_tet *tet)
 int		fillit_go(t_map *map, int i)
 {
 	t_tet	*tet;
-	int ok;
+	int j;
 
 	tet = &map->tets[i];
 
-	if (fillit_look(map, tet))
+	j = 0;
+	while (0)
 	{
-		ok = fillit_ok(map, tet);
-		if (fillit_tet(map, tet, ok))
-		{
-			/*
-			if (fillit_go(map, i + 1))
-				return (1);
-			else
-				fillit_tet(map, tet, !ok);
-			*/
-		}
+		j = fillit_look(map, tet, j);
+		fillit_tet(map, tet, j, 1);
+		if (fillit_go(map, i + 1))
+			return (1);
+		fillit_tet(map, tet, j, 0);
 	}
 	return (1);
 	//return (0);

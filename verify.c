@@ -18,9 +18,14 @@
 
 void	print_chunk(char *chunk, t_tet *tet)
 {
-	int i;
+	int		i;
+	int		j;
+	int		k;
 
 	printf("%d : %c\n", tet->i, tet->c);
+	i = 0;
+	while (chunk[i])
+		printf("%c", chunk[i++]);
 	i = 0;
 	printf("hashes: ");
 	while (i < 4)
@@ -30,10 +35,21 @@ void	print_chunk(char *chunk, t_tet *tet)
 	printf("deltas: ");
 	while (i < 4)
 		printf("%d ", tet->deltas[i++]);
-	printf("\n");
-	i = 0;
-	while (chunk[i])
-		printf("%c", chunk[i++]);
+	printf("\n\n");
+	i = -1;
+	j = 0;
+	k = tet->deltas[j];
+	while (++i < 16)
+	{
+		if (j < 4 && i == k)
+		{
+			printf("#");
+			k += tet->deltas[++j];
+		}
+		else
+			printf(".");
+	}
+	printf("\n\n");
 }
 
 int		scan_file(char *file, t_map *map)

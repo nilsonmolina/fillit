@@ -56,7 +56,7 @@ int				is_l(int *hs, int *ds);
 
 int				fillit_try(t_map *map);
 int				fillit_go(t_map *map, int i);
-int				fillit_look(t_map *map, t_tet *tet);
-int				fillit_ok(t_map *map, t_tet *tet);
+int				fillit_look(t_map *map, t_tet *tet, int j);
+void			fillit_tet(t_map *map, t_tet *tet, int j, int ok);
 
 #endif
