@@ -22,11 +22,6 @@ void	fillit_tet(t_map *map, t_tet *tet, int j, int ok)
 	while (++i < 4)
 	{
 		k += tet->deltas[i] + (i && tet->deltas[i] > 1 ? map->size - 4 : 0);
-		/*
-		k += (i && tet->deltas[i] > 1)
-			? (tet->deltas[i] + map->size - 4)
-			: tet->deltas[i];
-		*/
 		map->z[j + k] = (ok ? tet->c : '.');
 	}
 }
