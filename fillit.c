@@ -29,40 +29,40 @@ void	fillit_tet(t_map *map, t_tet *tet, int j, int ok)
 int		fillit_look(t_map *map, t_tet *tet, int j)
 {
 	int		i;
+	int		k;
 
-	j = 0;
-	i = -1;
-	/*
-	i = -1;
-	while (++i < map->size)
+	while (j < map->size * map->size)
 	{
-		// check wall?
+		i = -1;
+		k = 0;
+		while (++i < 4)
+		{
+			k += tet->deltas[i] + (i && tet->deltas[i] > 1 ? map->size - 4 : 0);
+			if (map->z[j + k] != '.' || ((j + k) && (j + k) % map->size == 0))
+				break;
+		}
+		if (i == 3)
+			return (j);
+		j++;
 	}
-	j = 0;
-	while (++j < 4)
-	{
-		k = tet->deltas[j] - tet->deltas[j - 1];
-	}
-	*/
-	return (map != NULL && tet != NULL);
-	//return (0);
+	return (0);
 }
 
 int		fillit_go(t_map *map, int i)
 {
 	t_tet	*tet;
-	int j;
+	int		j;
 
 	tet = &map->tets[i];
-
 	j = 0;
-	while (0)
+	while (i < map->count && j < map->size * map->size)
 	{
 		j = fillit_look(map, tet, j);
-		fillit_tet(map, tet, j, 1);
+		fillit_tet(map, tet, j, OK);
 		if (fillit_go(map, i + 1))
 			return (1);
-		fillit_tet(map, tet, j, 0);
+		fillit_tet(map, tet, j, !OK);
+		j++;
 	}
 	return (1);
 	//return (0);

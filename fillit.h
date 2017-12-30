@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+# define OK 1
 # define MAX 26
 # define IS_VALID_CHAR(x) (x == '.' || x == '#' || x == '\n')
 # define BUF_SIZE 21
