@@ -109,8 +109,6 @@ int		scan_chunk(char *chunk, t_tet *tet)
 	}
 	if (tiles != 4)
 		return (0);
-	if (i != BUF_SIZE)
-		return (0);
 	return (1);
 }
 

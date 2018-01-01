@@ -12,6 +12,12 @@
 
 #include "fillit.h"
 
+int		fillit_out(t_map *map)
+{
+	write(1, map->z, map->size * map->size);
+	return (1);
+}
+
 int		fillit_try(t_map *map)
 {
 	int		i;
@@ -20,12 +26,15 @@ int		fillit_try(t_map *map)
 	while (map->size < MAX)
 	{
 		i = 0;
-		map->z[map->size] = '\0';
-		while (i < map->size)
+		map->z[map->size * map->size] = '\0';
+		while (i < map->size * map->size)
 			map->z[i++] = '.';
 		if (fillit_go(map, 0))
-			return (1);
+			return (fillit_out(map));
 		map->size++;
+		//
+		//printf("map->size++: %d", map->size);
+		//
 	}
 	return (0);
 }

@@ -33,19 +33,20 @@ int		fillit_look(t_map *map, t_tet *tet, int j)
 
 	while (j < map->size * map->size)
 	{
-		i = -1;
+		i = 0;
 		k = 0;
-		while (++i < 4)
+		while (i < 4)
 		{
 			k += tet->deltas[i] + (i && tet->deltas[i] > 1 ? map->size - 4 : 0);
-			if (map->z[j + k] != '.' || ((j + k) && (j + k) % map->size == 0))
+			//if (map->z[j + k] != '.' || (map->size > 2 && (j + k) && (j + k) % map->size == 0))
+			if (map->z[j + k] != '.')
 				break;
+			if (++i == 4)
+				return (j);
 		}
-		if (i == 3)
-			return (j);
 		j++;
 	}
-	return (0);
+	return (-1);
 }
 
 int		fillit_go(t_map *map, int i)
@@ -53,17 +54,17 @@ int		fillit_go(t_map *map, int i)
 	t_tet	*tet;
 	int		j;
 
+	if (i == map->count)
+		return (1);
 	tet = &map->tets[i];
-	j = 0;
-	while (i < map->count && j < map->size * map->size)
+	j = -1;
+	while ((j = fillit_look(map, tet, j + 1)) != -1)
 	{
-		j = fillit_look(map, tet, j);
 		fillit_tet(map, tet, j, OK);
+		// printf
 		if (fillit_go(map, i + 1))
 			return (1);
 		fillit_tet(map, tet, j, !OK);
-		j++;
 	}
-	return (1);
-	//return (0);
+	return (0);
 }

@@ -18,6 +18,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+
+//
+#include <stdio.h>
+//
+
 # define OK 1
 # define MAX 26
 # define IS_VALID_CHAR(x) (x == '.' || x == '#' || x == '\n')
@@ -59,5 +64,6 @@ int				fillit_try(t_map *map);
 int				fillit_go(t_map *map, int i);
 int				fillit_look(t_map *map, t_tet *tet, int j);
 void			fillit_tet(t_map *map, t_tet *tet, int j, int ok);
+int				fillit_out(t_map *map);
 
 #endif

@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS := "-Wall" "-Wextra" "-Werror" "-o"
+CFLAGS := "-Wall" "-Wextra" "-Werror" "-g" "-o"
 
 NAME := fillit
 
