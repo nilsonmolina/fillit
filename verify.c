@@ -6,17 +6,19 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:40:28 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/22 22:06:34 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/01/01 22:02:53 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
+#include <stdio.h>
+
 int		scan_file(char *file, t_map *map)
 {
 	int		fd;
 	int		ret;
-	char	buffer[BUF_SIZE];
+	char	buffer[BUF_SIZE + 1];
 	int		i;
 
 	i = 0;
@@ -25,7 +27,8 @@ int		scan_file(char *file, t_map *map)
 		return (0);
 	while ((ret = read(fd, buffer, BUF_SIZE)))
 	{
-		if (i > 25)
+		buffer[ret] = '\0';
+		if (i > 25 || ret < BUF_SIZE - 1 || ret > BUF_SIZE)
 			return (0);
 		if (!scan_chunk(buffer, &map->tets[i]))
 			return (0);
@@ -63,8 +66,6 @@ int		scan_chunk(char *chunk, t_tet *tet)
 		i++;
 	}
 	if (tiles != 4)
-		return (0);
-	if (i < BUF_SIZE - 1 || i > BUF_SIZE)
 		return (0);
 	return (1);
 }
