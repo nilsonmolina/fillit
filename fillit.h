@@ -18,11 +18,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-
-//
-#include <stdio.h>
-//
-
 # define OK 1
 # define MAX 26
 # define IS_VALID_CHAR(x) (x == '.' || x == '#' || x == '\n')
@@ -33,7 +28,6 @@ typedef struct	s_tet
 {
 	int		hashes[4];
 	int		deltas[4];
-	int		i;
 	char	c;
 }				t_tet;
 
@@ -41,7 +35,6 @@ typedef struct	s_map
 {
 	int		count;
 	int		size;
-	//int		i;
 	char	z[MAX * MAX];
 	t_tet	tets[MAX];
 }				t_map;

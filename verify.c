@@ -12,56 +12,14 @@
 
 #include "fillit.h"
 
-//
-#include <stdio.h>
-//
-
-void	print_chunk(char *chunk, t_tet *tet)
-{
-	int		i;
-	int		j;
-	int		k;
-
-	printf("%d : %c\n", tet->i, tet->c);
-	i = 0;
-	while (chunk[i])
-		printf("%c", chunk[i++]);
-	i = 0;
-	printf("hashes: ");
-	while (i < 4)
-		printf("%d ", tet->hashes[i++]);
-	printf("\n");
-	i = 0;
-	printf("deltas: ");
-	while (i < 4)
-		printf("%d ", tet->deltas[i++]);
-	printf("\n\n");
-	i = -1;
-	j = 0;
-	k = tet->deltas[j];
-	while (++i < 16)
-	{
-		if (j < 4 && i == k)
-		{
-			printf("#");
-			k += tet->deltas[++j];
-		}
-		else
-			printf(".");
-	}
-	printf("\n\n");
-}
-
 int		scan_file(char *file, t_map *map)
 {
 	int		fd;
 	int		ret;
 	char	buffer[BUF_SIZE];
 	int		i;
-	char	c;
 
 	i = 0;
-	c = 'A';
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (0);
@@ -72,12 +30,9 @@ int		scan_file(char *file, t_map *map)
 		if (!scan_chunk(buffer, &map->tets[i]))
 			return (0);
 		diff_chunk(&map->tets[i]);
-		map->tets[i].i = i;
-		map->tets[i].c = c++;
-		//print_chunk(buffer, &map->tets[i]);
+		map->tets[i].c = 'A' + i;
 		if (!verify_tetrimino(&map->tets[i]))
 			return (0);
-		print_chunk(buffer, &map->tets[i]);
 		i++;
 	}
 	close(fd);
@@ -108,6 +63,8 @@ int		scan_chunk(char *chunk, t_tet *tet)
 		i++;
 	}
 	if (tiles != 4)
+		return (0);
+	if (i < BUF_SIZE - 1 || i > BUF_SIZE)
 		return (0);
 	return (1);
 }
