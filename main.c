@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:35:59 by nmolina           #+#    #+#             */
-/*   Updated: 2017/12/21 23:24:19 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/01/01 18:06:06 by nmolina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 
 int		fillit_out(t_map *map)
 {
-	write(1, map->z, map->size * map->size);
+	int i;
+
+	i = 0;
+	while (i < (map->size * map->size))
+	{	
+		if (i != 0 && i % map->size == 0)
+			write(1, "\n", 1);
+		write(1, &map->z[i], 1);
+		i++;
+	}
+	write(1, "\n", 1);
 	return (1);
 }
 
