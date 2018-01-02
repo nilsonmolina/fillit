@@ -17,6 +17,8 @@ int		fillit_try(t_map *map)
 	int		i;
 
 	map->size = 2;
+	while (map->size * map->size < (4 * map->count))
+		map->size++;
 	while (map->size < MAX)
 	{
 		i = 0;
