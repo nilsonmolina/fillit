@@ -25,6 +25,9 @@ int		fillit_try(t_map *map)
 		map->z[map->size * map->size] = '\0';
 		while (i < map->size * map->size)
 			map->z[i++] = '.';
+		//
+		fillit_out(map);
+		//
 		if (fillit_go(map, 0))
 			return (fillit_out(map));
 		map->size++;
@@ -44,9 +47,15 @@ int		fillit_go(t_map *map, int i)
 	while ((j = fillit_look(map, tet, j + 1)) != -1)
 	{
 		fillit_tet(map, tet, j, OK);
+		//
+		fillit_out(map);
+		//
 		if (fillit_go(map, i + 1))
 			return (1);
 		fillit_tet(map, tet, j, !OK);
+		//
+		fillit_out(map);
+		//
 	}
 	return (0);
 }
@@ -94,16 +103,21 @@ void	fillit_tet(t_map *map, t_tet *tet, int j, int ok)
 
 int		fillit_out(t_map *map)
 {
-	int i;
-
-	i = 0;
-	while (i < (map->size * map->size))
-	{
-		if (i != 0 && i % map->size == 0)
-			write(1, "\n", 1);
-		write(1, &map->z[i], 1);
-		i++;
-	}
-	write(1, "\n", 1);
+	//
+	write(1, map->z, map->size * map->size);
+	write(1, "\n\n", 2);
 	return (1);
+	//
+	//int i;
+	//
+	//i = 0;
+	//while (i < (map->size * map->size))
+	//{
+	//	if (i != 0 && i % map->size == 0)
+	//		write(1, "\n", 1);
+	//	write(1, &map->z[i], 1);
+	//	i++;
+	//}
+	//write(1, "\n\n", 2);
+	//return (1);
 }
