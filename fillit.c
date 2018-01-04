@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:57:45 by nmolina           #+#    #+#             */
-/*   Updated: 2018/01/03 20:43:13 by ndoorn           ###   ########.fr       */
+/*   Updated: 2018/01/04 15:13:23 by ndoorn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,18 @@ int		fillit_look(t_map *map, t_tet *tet, int j)
 		dk = 0;
 		while (i < 4)
 		{
+			dk = k;
 			k += tet->deltas[i] + (i && tet->deltas[i] > 1 ? map->size - 4 : 0);
 			dk = k - dk;
-			if (map->z[j + k] != '.')
-				break ;
-			if ((map->size == 2 && !is_square(tet->hashes)) ||
-				 (map->size == 3 && is_line(tet->hashes)))
-				break ;
-			if (map->size == 3 &&
-				(tet->deltas[0] == 2 && tet->deltas[1] == 2 &&
-				tet->deltas[2] == 1 && tet->deltas[3] == 1) &&
-				i != 1 && dk == 1 && (j + k) % map->size == 0)
-			{
-				break ;
-			}
-			if ((map->size > 3 && dk == 1 && (j + k) % map->size == 0))
+			if ((map->z[j + k] != '.') ||
+				((map->size == 2 && !is_square(tet->hashes)) ||
+				(map->size == 3 && is_line(tet->hashes))) ||
+				(map->size == 3 && i && tet->deltas[i] != 2 &&
+				dk == 1 && (j + k) % map->size == 0) ||
+				((map->size > 3 && dk == 1 && (j + k) % map->size == 0)))
 				break ;
 			if (++i == 4)
 				return (j);
-			dk = k;
 		}
 		j++;
 	}
