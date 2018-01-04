@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:40:28 by nmolina           #+#    #+#             */
-/*   Updated: 2018/01/01 22:02:53 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/01/03 20:39:55 by ndoorn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int		scan_file(char *file, t_map *map)
 	while ((io.ret = read(io.fd, io.buffer, BUF_SIZE)))
 	{
 		io.buffer[io.ret] = '\0';
-		if (i > 25 || io.ret < BUF_SIZE - 1 || io.ret > BUF_SIZE || 
+		if (i > 25 || io.ret < BUF_SIZE - 1 || io.ret > BUF_SIZE ||
 			!scan_chunk(io.buffer, &map->tets[i]))
-			return (0); 
+			return (0);
 		diff_chunk(&map->tets[i]);
 		map->tets[i].c = 'A' + i;
 		if (!verify_tetrimino(&map->tets[i]))

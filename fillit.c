@@ -6,34 +6,11 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:57:45 by nmolina           #+#    #+#             */
-/*   Updated: 2018/01/01 12:16:14 by nmolina          ###   ########.fr       */
+/*   Updated: 2018/01/03 20:43:13 by ndoorn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-int		fillit_try(t_map *map)
-{
-	int		i;
-
-	map->size = 2;
-	while (map->size * map->size < (4 * map->count))
-		map->size++;
-	while (map->size < MAX)
-	{
-		i = 0;
-		map->z[map->size * map->size] = '\0';
-		while (i < map->size * map->size)
-			map->z[i++] = '.';
-		//
-		fillit_out(map);
-		//
-		if (fillit_go(map, 0))
-			return (fillit_out(map));
-		map->size++;
-	}
-	return (0);
-}
 
 int		fillit_go(t_map *map, int i)
 {
@@ -75,8 +52,19 @@ int		fillit_look(t_map *map, t_tet *tet, int j)
 		{
 			k += tet->deltas[i] + (i && tet->deltas[i] > 1 ? map->size - 4 : 0);
 			dk = k - dk;
-			if (map->z[j + k] != '.' ||
-				(map->size > 2 && dk == 1 && (j + k) % map->size == 0))
+			if (map->z[j + k] != '.')
+				break ;
+			if ((map->size == 2 && !is_square(tet->hashes)) ||
+				 (map->size == 3 && is_line(tet->hashes)))
+				break ;
+			if (map->size == 3 &&
+				(tet->deltas[0] == 2 && tet->deltas[1] == 2 &&
+				tet->deltas[2] == 1 && tet->deltas[3] == 1) &&
+				i != 1 && dk == 1 && (j + k) % map->size == 0)
+			{
+				break ;
+			}
+			if ((map->size > 3 && dk == 1 && (j + k) % map->size == 0))
 				break ;
 			if (++i == 4)
 				return (j);
@@ -99,25 +87,4 @@ void	fillit_tet(t_map *map, t_tet *tet, int j, int ok)
 		k += tet->deltas[i] + (i && tet->deltas[i] > 1 ? map->size - 4 : 0);
 		map->z[j + k] = (ok ? tet->c : '.');
 	}
-}
-
-int		fillit_out(t_map *map)
-{
-	//
-	write(1, map->z, map->size * map->size);
-	write(1, "\n\n", 2);
-	return (1);
-	//
-	//int i;
-	//
-	//i = 0;
-	//while (i < (map->size * map->size))
-	//{
-	//	if (i != 0 && i % map->size == 0)
-	//		write(1, "\n", 1);
-	//	write(1, &map->z[i], 1);
-	//	i++;
-	//}
-	//write(1, "\n\n", 2);
-	//return (1);
 }
