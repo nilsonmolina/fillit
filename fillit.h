@@ -24,6 +24,14 @@
 # define BUF_SIZE 21
 # define COUNTER_VARS int i = 0; int x = 0; int y = 0; int tiles = 0;
 
+typedef struct	s_io
+{
+	int		fd;
+	int		ret;
+	char	buffer[BUF_SIZE + 1];
+	int		last_ret;
+}				t_io;
+
 typedef struct	s_tet
 {
 	int		hashes[4];

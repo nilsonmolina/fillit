@@ -16,29 +16,29 @@
 
 int		scan_file(char *file, t_map *map)
 {
-	int		fd;
-	int		ret;
-	char	buffer[BUF_SIZE + 1];
 	int		i;
+	t_io	io;
 
 	i = 0;
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
+	io.fd = open(file, O_RDONLY);
+	if (io.fd == -1)
 		return (0);
-	while ((ret = read(fd, buffer, BUF_SIZE)))
+	while ((io.ret = read(io.fd, io.buffer, BUF_SIZE)))
 	{
-		buffer[ret] = '\0';
-		if (i > 25 || ret < BUF_SIZE - 1 || ret > BUF_SIZE)
-			return (0);
-		if (!scan_chunk(buffer, &map->tets[i]))
-			return (0);
+		io.buffer[io.ret] = '\0';
+		if (i > 25 || io.ret < BUF_SIZE - 1 || io.ret > BUF_SIZE || 
+			!scan_chunk(io.buffer, &map->tets[i]))
+			return (0); 
 		diff_chunk(&map->tets[i]);
 		map->tets[i].c = 'A' + i;
 		if (!verify_tetrimino(&map->tets[i]))
 			return (0);
+		io.last_ret = io.ret;
 		i++;
 	}
-	close(fd);
+	if (io.last_ret == BUF_SIZE || i == 0)
+		return (0);
+	close(io.fd);
 	map->count = i;
 	return (1);
 }
