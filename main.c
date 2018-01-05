@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 12:35:59 by nmolina           #+#    #+#             */
-/*   Updated: 2018/01/04 15:40:05 by ndoorn          ###   ########.fr       */
+/*   Updated: 2018/01/04 16:27:07 by ndoorn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ int		fillit_try(t_map *map)
 		map->z[map->size * map->size] = '\0';
 		while (i < map->size * map->size)
 			map->z[i++] = '.';
-		//
-		fillit_out(map);
-		//
 		i = -1;
 		if (fillit_go(map, i + 1))
 			return (fillit_out(map));
