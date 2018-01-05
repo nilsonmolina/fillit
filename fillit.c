@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:57:45 by nmolina           #+#    #+#             */
-/*   Updated: 2018/01/04 15:13:23 by ndoorn           ###   ########.fr       */
+/*   Updated: 2018/01/04 16:20:11 by ndoorn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,40 @@ int		fillit_go(t_map *map, int i)
 	while ((j = fillit_look(map, tet, j + 1)) != -1)
 	{
 		fillit_tet(map, tet, j, OK);
-		//
-		fillit_out(map);
-		//
 		if (fillit_go(map, i + 1))
 			return (1);
 		fillit_tet(map, tet, j, !OK);
-		//
-		fillit_out(map);
-		//
 	}
 	return (0);
 }
 
+int		fillit_delta_k(t_tet *tet, int i, int map_size)
+{
+	return (tet->deltas[i] + (i && tet->deltas[i] > 1 ? map_size - 4 : 0));
+}
+
 int		fillit_look(t_map *map, t_tet *tet, int j)
 {
-	int		i;
-	int		k;
-	int		dk;
+	t_ok	ok;
 
 	while (j < map->size * map->size)
 	{
-		i = 0;
-		k = 0;
-		dk = 0;
-		while (i < 4)
+		ok.i = 0;
+		ok.k = 0;
+		ok.dk = 0;
+		while (ok.i < 4)
 		{
-			dk = k;
-			k += tet->deltas[i] + (i && tet->deltas[i] > 1 ? map->size - 4 : 0);
-			dk = k - dk;
-			if ((map->z[j + k] != '.') ||
+			ok.dk = ok.k;
+			ok.k += fillit_delta_k(tet, ok.i, map->size);
+			ok.dk = ok.k - ok.dk;
+			if ((map->z[j + ok.k] != '.') ||
 				((map->size == 2 && !is_square(tet->hashes)) ||
 				(map->size == 3 && is_line(tet->hashes))) ||
-				(map->size == 3 && i && tet->deltas[i] != 2 &&
-				dk == 1 && (j + k) % map->size == 0) ||
-				((map->size > 3 && dk == 1 && (j + k) % map->size == 0)))
+				(map->size == 3 && ok.i && tet->deltas[i] != 2 &&
+					ok.dk == 1 && (j + ok.k) % map->size == 0) ||
+				((map->size > 3 && ok.dk == 1 && (j + ok.k) % map->size == 0)))
 				break ;
-			if (++i == 4)
+			if (++ok.i == 4)
 				return (j);
 		}
 		j++;

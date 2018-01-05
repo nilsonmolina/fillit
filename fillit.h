@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 14:30:02 by nmolina           #+#    #+#             */
-/*   Updated: 2018/01/04 14:56:33 by ndoorn          ###   ########.fr       */
+/*   Updated: 2018/01/04 16:19:13 by ndoorn          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ typedef struct	s_ch
 	char	*buf;
 }				t_ch;
 
+typedef struct	s_ok
+{
+	int		i;
+	int		k;
+	int		dk;
+}				t_ok;
+
 typedef struct	s_tet
 {
 	int		hashes[4];
@@ -72,6 +79,7 @@ int				is_l(int *hs, int *ds);
 int				fillit_try(t_map *map);
 int				fillit_go(t_map *map, int i);
 int				fillit_look(t_map *map, t_tet *tet, int j);
+int				fillit_delta_k(t_tet *tet, int i, int map_size);
 void			fillit_tet(t_map *map, t_tet *tet, int j, int ok);
 int				fillit_out(t_map *map);
 
