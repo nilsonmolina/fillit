@@ -6,7 +6,7 @@
 /*   By: nmolina <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 17:57:45 by nmolina           #+#    #+#             */
-/*   Updated: 2018/01/04 16:20:11 by ndoorn           ###   ########.fr       */
+/*   Updated: 2018/01/04 16:24:23 by ndoorn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		fillit_look(t_map *map, t_tet *tet, int j)
 			if ((map->z[j + ok.k] != '.') ||
 				((map->size == 2 && !is_square(tet->hashes)) ||
 				(map->size == 3 && is_line(tet->hashes))) ||
-				(map->size == 3 && ok.i && tet->deltas[i] != 2 &&
+				(map->size == 3 && ok.i && tet->deltas[ok.i] != 2 &&
 					ok.dk == 1 && (j + ok.k) % map->size == 0) ||
 				((map->size > 3 && ok.dk == 1 && (j + ok.k) % map->size == 0)))
 				break ;
